@@ -87,15 +87,16 @@
 	 {"result" : False}
 	 */
 	
-	NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://imok.jeztek.com/data/imok/%@/?lat=%f&lon=%f",
+	NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:8000/data/imok/%@/?lat=%f&lon=%f&time=%f",
 									   [[NSUserDefaults standardUserDefaults] valueForKey:@"userKey"],
 									   location.coordinate.latitude,
-									   location.coordinate.longitude]];
+									   location.coordinate.longitude,
+									   [[NSDate date] timeIntervalSince1970]]];
 	
 	NSLog(@"url: %@", url);
 	NSString* returnText = [[HTTPServerInterface sharedInstance] sendHTTPPost:url withStringBody:@""];
 	
-	
+	NSLog(@"returnText: %@", returnText);
 	id jsonValue = [returnText JSONValue];
 	NSLog(@"jsonString: %@", jsonValue);
 	

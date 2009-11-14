@@ -71,7 +71,7 @@
 	 {"result" : False}
 	 */
 	
-	NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://imok.jeztek.com/data/register/%@/", userKeyField.text]];
+	NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:8000/data/register/%@/", userKeyField.text]];
 	NSString* returnText = [[HTTPServerInterface sharedInstance] sendHTTPPost:url withStringBody:@""];
 	
 	id jsonValue = [returnText JSONValue];
