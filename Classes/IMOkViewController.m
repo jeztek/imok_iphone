@@ -101,8 +101,8 @@
 	
 	if ([jsonValue boolForKey:@"result"]) {
 		// Success!		
-		UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Notification to I'm Ok sent!"
-															message:[NSString stringWithFormat:@"Thanks, %@!", [[NSUserDefaults standardUserDefaults] valueForKey:@"firstName"]]
+		UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Message sent!"
+															message:[NSString stringWithFormat:@"Thanks %@.", [[NSUserDefaults standardUserDefaults] valueForKey:@"firstName"]]
 														   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 		[alertView show];
 		[alertView release];
@@ -112,7 +112,7 @@
 		[[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"userKey"];
 		
 		UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Oops!"
-															message:@"Sorry, something went wrong communicating with I'm Ok. Please try again."
+															message:@"Sorry, something went wrong while sending your message.  Please try again."
 														   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 		[alertView show];
 		[alertView release];

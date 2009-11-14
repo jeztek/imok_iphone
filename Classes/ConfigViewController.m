@@ -83,8 +83,8 @@
 		[[NSUserDefaults standardUserDefaults] setValue:[jsonValue valueForKey:@"first_name"] forKey:@"firstName"];
 		[[NSUserDefaults standardUserDefaults] setValue:[jsonValue valueForKey:@"last_name"] forKey:@"lastName"];
 
-		UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"You're confirmed!"
-															message:[NSString stringWithFormat:@"Thanks, %@!", [jsonValue valueForKey:@"first_name"]]
+		UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Success!"
+															message:[NSString stringWithFormat:@"Your phone has been paired.  Thanks %@.", [jsonValue valueForKey:@"first_name"]]
 														   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 		[alertView show];
 		[alertView release];
@@ -94,7 +94,7 @@
 		[[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"userKey"];
 		
 		UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Oops!"
-															message:@"Sorry, the confirmation key didn't seem to work. Please try again."
+															message:@"Sorry, the user key you provided didn't work.  Please try again."
 														   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 		[alertView show];
 		[alertView release];
