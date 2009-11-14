@@ -29,12 +29,15 @@
 */
 
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
-*/
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+}
 
 
 /*
@@ -59,7 +62,31 @@
 
 
 - (void)dealloc {
+	[ageViewController release]; ageViewController = nil;
+	[configViewController release]; configViewController = nil;
+
     [super dealloc];
+}
+
+#pragma mark Actual code stuff
+
+-(IBAction)call911:(id)sender {
+	// Okay, so it doesn't actually call 911. In fact, it calls your cell phone's customer service line. :P
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:611"]];
+}
+
+-(IBAction)iAmOkayButton:(id)sender {
+	if (messageViewController == nil) {
+		messageViewController = [[MessageViewController alloc] init];
+	}
+	[self presentModalViewController:messageViewController animated:YES];
+}
+
+-(IBAction)runSetup:(id)sender {
+	if (configViewController == nil) {
+		configViewController = [[ConfigViewController alloc] init];
+	}
+	[self presentModalViewController:configViewController animated:YES];
 }
 
 @end

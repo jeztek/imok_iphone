@@ -7,10 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AreYouOldEnoughViewController.h"
+#import "ConfigViewController.h"
+#import "MessageViewController.h"
 
 @interface IMOkViewController : UIViewController {
-
+	AreYouOldEnoughViewController* ageViewController;
+	ConfigViewController* configViewController;
+	MessageViewController* messageViewController;
 }
+
+-(IBAction)call911:(id)sender;
+-(IBAction)iAmOkayButton:(id)sender;
+-(IBAction)runSetup:(id)sender;
 
 @end
 
