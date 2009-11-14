@@ -75,7 +75,7 @@
 	NSString* returnText = [[HTTPServerInterface sharedInstance] sendHTTPPost:url withStringBody:@""];
 	
 	id jsonValue = [returnText JSONValue];
-	NSLog(@"jsonString: @%", jsonValue);
+	NSLog(@"jsonString: %@", jsonValue);
 	
 	if ([jsonValue boolForKey:@"result"]) {
 		// Success!
