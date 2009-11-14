@@ -15,6 +15,7 @@
 	IBOutlet UITextField* phoneNumberField;
 	IBOutlet UITextField* userKeyField;
 
+	IBOutlet UIActivityIndicatorView* spinner;
 }
 
 -(IBAction)commitPrefs:(id)sender;

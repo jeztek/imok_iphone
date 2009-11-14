@@ -21,10 +21,9 @@
     [window addSubview:viewController.view];
     [window makeKeyAndVisible];
 	
-//	[[LCCoreLocationDelegate sharedInstance] setDelegate:viewController];
-//	[[LCCoreLocationDelegate sharedInstance].locationManager startUpdatingLocation];
-	
-	NSString* firstName = [[NSUserDefaults standardUserDefaults] stringForKey:@"firstName"];
+	[[LCCoreLocationDelegate sharedInstance] setDelegate:viewController];
+
+	NSString* firstName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userKey"];
 	if ([firstName length] == 0) {
 		// Hey.... we should ask the user for their info since we don't have any of it. :P
 		[viewController performSelector:@selector(runSetup:) withObject:nil];

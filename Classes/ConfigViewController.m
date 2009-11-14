@@ -7,7 +7,8 @@
 //
 
 #import "ConfigViewController.h"
-
+#import "HTTPServerInterface.h"
+#import "JSON.h"
 
 @implementation ConfigViewController
 
@@ -56,24 +57,54 @@
 #pragma mark Actions
 
 -(IBAction)commitPrefs:(id)sender {
-	if (firstNameField.text == nil)
-		firstNameField.text = @"";
-	
-	if (lastNameField.text == nil)
-		lastNameField.text = @"";
-	
-	if (phoneNumberField.text == nil)
-		phoneNumberField.text = @"";
+	[spinner startAnimating];
 	
 	if (userKeyField.text == nil)
 		userKeyField.text = @"";
 	
-	[[NSUserDefaults standardUserDefaults] setValue:firstNameField.text forKey:@"firstName"];
-	[[NSUserDefaults standardUserDefaults] setValue:lastNameField.text forKey:@"lastName"];
-	[[NSUserDefaults standardUserDefaults] setValue:phoneNumberField.text forKey:@"phoneNumber"];
-	[[NSUserDefaults standardUserDefaults] setValue:userKeyField.text forKey:@"userKey"];
+	/*
+	 Registration:
+	 http://imok.jeztek.com/data/register/<user id>/
+	 
+	 Response:
+	 {"result" : True, "first_name" : "Tom", "last_name" : "Jones"}
+	 {"result" : False}
+	 */
+	
+	NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://imok.jeztek.com/data/register/%@/", userKeyField.text]];
+	NSString* returnText = [[HTTPServerInterface sharedInstance] sendHTTPPost:url withStringBody:@""];
+	
+	id jsonValue = [returnText JSONValue];
+	NSLog(@"jsonString: @%", jsonValue);
+	
+	if ([jsonValue boolForKey:@"result"]) {
+		// Success!
+		[[NSUserDefaults standardUserDefaults] setValue:userKeyField.text forKey:@"userKey"];
+		[[NSUserDefaults standardUserDefaults] setValue:[jsonValue valueForKey:@"first_name"] forKey:@"firstName"];
+		[[NSUserDefaults standardUserDefaults] setValue:[jsonValue valueForKey:@"last_name"] forKey:@"lastName"];
 
-	[self dismissModalViewControllerAnimated:YES];
+		UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"You're confirmed!"
+															message:[NSString stringWithFormat:@"Thanks, %@!", [jsonValue valueForKey:@"first_name"]]
+														   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+		[alertView show];
+		[alertView release];
+	}
+	else {
+		// Fail :(
+		[[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"userKey"];
+		
+		UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Oops!"
+															message:@"Sorry, the confirmation key didn't seem to work. Please try again."
+														   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+		[alertView show];
+		[alertView release];
+	}	
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	[spinner stopAnimating];
+	if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"userKey"] length] > 0)
+		[self dismissModalViewControllerAnimated:YES];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

@@ -15,6 +15,8 @@
 	AreYouOldEnoughViewController* ageViewController;
 	ConfigViewController* configViewController;
 	MessageViewController* messageViewController;
+	
+	IBOutlet UIActivityIndicatorView* spinner;
 }
 
 -(IBAction)call911:(id)sender;
